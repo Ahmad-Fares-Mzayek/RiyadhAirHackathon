@@ -5,7 +5,6 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.List
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material3.*
@@ -68,8 +67,7 @@ class MainActivity : ComponentActivity() {
                                 
                                 val items = listOf(
                                     Screen.Home to Icons.Default.Home,
-                                    Screen.Checklist to Icons.AutoMirrored.Filled.List,
-                                    Screen.ARGuide to Icons.Default.LocationOn
+                                    Screen.Tour to Icons.Default.LocationOn // Using LocationOn as a map placeholder
                                 )
                                 
                                 items.forEach { (screen, icon) ->

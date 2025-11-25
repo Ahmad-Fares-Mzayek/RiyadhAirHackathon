@@ -63,4 +63,5 @@ dependencies {
     implementation(libs.androidx.datastore.preferences)
     implementation(libs.accompanist.permissions)
     implementation(libs.google.ar.core)
+    implementation(libs.osmdroid.android)
 }

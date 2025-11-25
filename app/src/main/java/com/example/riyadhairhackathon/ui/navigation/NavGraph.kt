@@ -15,6 +15,7 @@ sealed class Screen(val route: String) {
     object Home : Screen("home")
     object Checklist : Screen("checklist")
     object ARGuide : Screen("ar_guide")
+    object Tour : Screen("tour")
 }
 
 @Composable
@@ -50,6 +51,9 @@ fun NavGraph(
         }
         composable(Screen.ARGuide.route) {
             ARGuideScreen()
+        }
+        composable(Screen.Tour.route) {
+            com.example.riyadhairhackathon.ui.screens.TourScreen()
         }
     }
 }
