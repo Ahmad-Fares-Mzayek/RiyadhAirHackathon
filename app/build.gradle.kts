@@ -18,6 +18,8 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        manifestPlaceholders["MAPS_API_KEY"] = "AIzaSyDOe-QVdVttduCObujbhisi53kpPHNECcA"
+
     }
 
     buildTypes {
@@ -64,4 +66,16 @@ dependencies {
     implementation(libs.accompanist.permissions)
     implementation(libs.google.ar.core)
     implementation(libs.osmdroid.android)
+
+    // CameraX
+    val cameraxVersion = "1.3.4"
+
+    implementation("androidx.camera:camera-core:$cameraxVersion")
+    implementation("androidx.camera:camera-camera2:$cameraxVersion")
+    implementation("androidx.camera:camera-lifecycle:$cameraxVersion")
+    implementation("androidx.camera:camera-view:$cameraxVersion")
+    implementation("com.google.android.gms:play-services-maps:18.1.0")
+    implementation("com.google.maps.android:maps-compose:4.3.0")
+
+
 }

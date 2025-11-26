@@ -1,5 +1,6 @@
 package com.example.riyadhairhackathon.ui.screens
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.MaterialTheme
@@ -9,10 +10,10 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.example.riyadhairhackathon.data.UserPreferences
-import com.example.riyadhairhackathon.ui.components.PlaceholderImage
 import com.example.riyadhairhackathon.ui.components.PrimaryButton
 import com.example.riyadhairhackathon.ui.theme.DeepNavyPurple
 import kotlinx.coroutines.launch
@@ -34,12 +35,13 @@ fun OnboardingScreen(
     ) {
         Spacer(modifier = Modifier.weight(1f))
 
-        // Riyadh Air Logo
-        androidx.compose.foundation.Image(
-            painter = androidx.compose.ui.res.painterResource(id = com.example.riyadhairhackathon.R.drawable.riyadh_air_logo),
+        Image(
+            painter = androidx.compose.ui.res.painterResource(
+                id = com.example.riyadhairhackathon.R.drawable.riyadh_air_logo
+            ),
             contentDescription = "Riyadh Air Logo",
             modifier = Modifier.size(120.dp),
-            contentScale = androidx.compose.ui.layout.ContentScale.Fit
+            contentScale = ContentScale.Fit
         )
 
         Spacer(modifier = Modifier.height(32.dp))
@@ -81,7 +83,7 @@ fun OnboardingScreen(
                 }
             }
         )
-        
+
         Spacer(modifier = Modifier.height(32.dp))
     }
 }

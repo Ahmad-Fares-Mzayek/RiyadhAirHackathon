@@ -14,7 +14,8 @@ sealed class Screen(val route: String) {
     object Onboarding : Screen("onboarding")
     object Home : Screen("home")
     object Checklist : Screen("checklist")
-    object ARGuide : Screen("ar_guide")
+    object ARGate : Screen("ar_gate")
+    object ARSeat : Screen("ar_seat")
     object Tour : Screen("tour")
 }
 
@@ -26,7 +27,7 @@ fun NavGraph(
 ) {
     NavHost(
         navController = navController,
-        startDestination = Screen.Home.route, // Default, overridden in MainActivity if needed
+        startDestination = Screen.Home.route,
         modifier = modifier
     ) {
         composable(Screen.Onboarding.route) {
@@ -39,19 +40,34 @@ fun NavGraph(
                 }
             )
         }
+
         composable(Screen.Home.route) {
             HomeScreen(
                 userPreferences = userPreferences,
-                onNavigateToAR = { navController.navigate(Screen.ARGuide.route) },
-                onNavigateToChecklist = { navController.navigate(Screen.Checklist.route) }
+                onNavigateToGateAR = {
+                    navController.navigate(Screen.ARGate.route)
+                },
+                onNavigateToSeatAR = {
+                    navController.navigate(Screen.ARSeat.route)
+                },
+                onNavigateToChecklist = {
+                    navController.navigate(Screen.Checklist.route)
+                }
             )
         }
+
         composable(Screen.Checklist.route) {
             ChecklistScreen(userPreferences = userPreferences)
         }
-        composable(Screen.ARGuide.route) {
-            ARGuideScreen()
+
+        composable(Screen.ARGate.route) {
+            ARGuideScreen(arMode = "GATE")
         }
+
+        composable(Screen.ARSeat.route) {
+            ARGuideScreen(arMode = "SEAT")
+        }
+
         composable(Screen.Tour.route) {
             com.example.riyadhairhackathon.ui.screens.TourScreen()
         }

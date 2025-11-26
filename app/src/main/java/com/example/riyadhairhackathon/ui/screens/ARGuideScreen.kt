@@ -1,6 +1,10 @@
 package com.example.riyadhairhackathon.ui.screens
 
 import android.Manifest
+import androidx.camera.core.CameraSelector
+import androidx.camera.core.Preview
+import androidx.camera.lifecycle.ProcessCameraProvider
+import androidx.camera.view.PreviewView
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
@@ -8,151 +12,152 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLifecycleOwner
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.viewinterop.AndroidView
+import androidx.core.content.ContextCompat
 import com.example.riyadhairhackathon.ui.components.PrimaryButton
-import com.example.riyadhairhackathon.ui.theme.DeepNavyPurple
-import com.example.riyadhairhackathon.ui.theme.LightIndigo
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState
 
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
-fun ARGuideScreen() {
+fun ARGuideScreen(
+    arMode: String,
+    targetGate: String = "A23",
+    targetSeat: String = "14C"
+) {
     val cameraPermissionState = rememberPermissionState(Manifest.permission.CAMERA)
-    var isArActive by remember { mutableStateOf(false) }
-    var arMode by remember { mutableStateOf("") } // "GATE" or "SEAT"
-    
-    // Mock Data - No user input
-    val targetGate = "A23"
-    val targetSeat = "14C"
 
-    if (isArActive) {
-        // Show AR View
-        Box(modifier = Modifier.fillMaxSize()) {
-            // Placeholder for AR Camera View
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .background(Color.DarkGray)
-            ) {
-                Text(
-                    "AR Camera Feed Placeholder\n(Requires Physical Device & Camera)",
-                    color = Color.White,
-                    modifier = Modifier.align(Alignment.Center),
-                    textAlign = androidx.compose.ui.text.style.TextAlign.Center
-                )
-            }
-            
-            // Overlays
-            Column(
-                modifier = Modifier
-                    .align(Alignment.TopCenter)
-                    .padding(top = 48.dp)
-                    .background(Color.Black.copy(alpha = 0.5f), shape = MaterialTheme.shapes.medium)
-                    .padding(16.dp)
-            ) {
-                Text(
-                    text = if (arMode == "GATE") "Gate $targetGate - 150m ahead" else "Seat $targetSeat - 6 rows ahead",
-                    color = Color.White,
-                    style = MaterialTheme.typography.titleMedium
-                )
-            }
-            
-            // Simulated AR Arrow
-            Box(
-                modifier = Modifier.align(Alignment.Center)
-            ) {
-                Text(
-                    text = "⬆️", // Simple arrow for demo
-                    style = MaterialTheme.typography.displayLarge
-                )
-            }
-
-            // Close Button
-            Button(
-                onClick = { isArActive = false },
-                modifier = Modifier
-                    .align(Alignment.TopEnd)
-                    .padding(16.dp),
-                colors = ButtonDefaults.buttonColors(containerColor = Color.Red)
-            ) {
-                Text("X")
-            }
+    LaunchedEffect(Unit) {
+        if (!cameraPermissionState.status.isGranted) {
+            cameraPermissionState.launchPermissionRequest()
         }
+    }
+
+    if (cameraPermissionState.status.isGranted) {
+        ARCameraWithOverlay(
+            arMode = arMode,
+            targetGate = targetGate,
+            targetSeat = targetSeat,
+            onClose = {
+            }
+        )
     } else {
-        // Selection Screen (Simplified)
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(24.dp)
+                .padding(24.dp),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text("Airport Wayfinding", style = MaterialTheme.typography.headlineMedium, color = DeepNavyPurple)
-            
             Text(
-                "Use AR to navigate the airport seamlessly. Your flight details are already loaded.",
+                text = "Camera permission is required to use AR navigation.",
                 style = MaterialTheme.typography.bodyLarge,
-                color = Color.Gray
+                textAlign = TextAlign.Center
             )
-            
-            // Gate Finder Card
-            Card(
-                modifier = Modifier.fillMaxWidth(),
-                colors = CardDefaults.cardColors(containerColor = Color.White),
-                elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
-            ) {
-                Column(modifier = Modifier.padding(24.dp)) {
-                    Text("Navigate to Gate", style = MaterialTheme.typography.titleMedium)
-                    Text(targetGate, style = MaterialTheme.typography.displaySmall, color = DeepNavyPurple)
-                    Spacer(modifier = Modifier.height(16.dp))
-                    PrimaryButton(
-                        text = "Start AR Navigation",
-                        onClick = {
-                            arMode = "GATE"
-                            if (cameraPermissionState.status.isGranted) {
-                                isArActive = true
-                            } else {
-                                cameraPermissionState.launchPermissionRequest()
-                            }
-                        }
-                    )
-                }
-            }
-
-            // Seat Finder Card
-            Card(
-                modifier = Modifier.fillMaxWidth(),
-                colors = CardDefaults.cardColors(containerColor = Color.White),
-                elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
-            ) {
-                Column(modifier = Modifier.padding(24.dp)) {
-                    Text("Find My Seat", style = MaterialTheme.typography.titleMedium)
-                    Text(targetSeat, style = MaterialTheme.typography.displaySmall, color = LightIndigo)
-                    Spacer(modifier = Modifier.height(16.dp))
-                    PrimaryButton(
-                        text = "Find Seat",
-                        onClick = {
-                            arMode = "SEAT"
-                            if (cameraPermissionState.status.isGranted) {
-                                isArActive = true
-                            } else {
-                                cameraPermissionState.launchPermissionRequest()
-                            }
-                        },
-                        backgroundColor = LightIndigo
-                    )
-                }
-            }
-            
-            Spacer(modifier = Modifier.weight(1f))
-            
-            Text(
-                "In production: Data pulled from user's booking via API",
-                style = MaterialTheme.typography.labelSmall,
-                color = Color.Gray,
-                modifier = Modifier.align(Alignment.CenterHorizontally)
+            Spacer(modifier = Modifier.height(16.dp))
+            PrimaryButton(
+                text = "Grant Permission",
+                onClick = { cameraPermissionState.launchPermissionRequest() }
             )
         }
     }
 }
+
+@Composable
+private fun ARCameraWithOverlay(
+    arMode: String,
+    targetGate: String,
+    targetSeat: String,
+    onClose: () -> Unit
+) {
+    val context = LocalContext.current
+    val lifecycleOwner = LocalLifecycleOwner.current
+
+    Box(modifier = Modifier.fillMaxSize()) {
+
+        AndroidView(
+            modifier = Modifier.fillMaxSize(),
+            factory = { ctx ->
+                val previewView = PreviewView(ctx).apply {
+                    scaleType = PreviewView.ScaleType.FILL_CENTER
+                }
+
+                val cameraProviderFuture = ProcessCameraProvider.getInstance(ctx)
+                cameraProviderFuture.addListener({
+                    val cameraProvider = cameraProviderFuture.get()
+
+                    val preview = Preview.Builder().build().also {
+                        it.setSurfaceProvider(previewView.surfaceProvider)
+                    }
+
+                    val cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
+
+                    try {
+                        cameraProvider.unbindAll()
+                        cameraProvider.bindToLifecycle(
+                            lifecycleOwner,
+                            cameraSelector,
+                            preview
+                        )
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+                }, ContextCompat.getMainExecutor(ctx))
+
+                previewView
+            }
+        )
+
+        Column(
+            modifier = Modifier
+                .align(Alignment.TopCenter)
+                .padding(top = 48.dp)
+                .background(
+                    Color.Black.copy(alpha = 0.5f),
+                    shape = MaterialTheme.shapes.medium
+                )
+                .padding(16.dp)
+        ) {
+            Text(
+                text = if (arMode == "GATE")
+                    "Gate $targetGate - 150m ahead"
+                else
+                    "Seat $targetSeat - 6 rows ahead",
+                color = Color.White,
+                style = MaterialTheme.typography.titleMedium
+            )
+            Text(
+                text = "Follow the arrow to reach your ${if (arMode == "GATE") "gate" else "seat"}",
+                color = Color.White.copy(alpha = 0.8f),
+                style = MaterialTheme.typography.bodySmall
+            )
+        }
+
+        Box(
+            modifier = Modifier.align(Alignment.Center)
+        ) {
+            Text(
+                text = "⬆",
+                style = MaterialTheme.typography.displayLarge,
+                color = Color.White,
+                textAlign = TextAlign.Center
+            )
+        }
+
+        Button(
+            onClick = onClose,
+            modifier = Modifier
+                .align(Alignment.TopEnd)
+                .padding(16.dp),
+            colors = ButtonDefaults.buttonColors(containerColor = Color.Red)
+        ) {
+            Text("X")
+        }
+    }
+}
+
