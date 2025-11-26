@@ -19,8 +19,21 @@ import com.example.riyadhairhackathon.ui.theme.DeepNavyPurple
 import com.example.riyadhairhackathon.ui.theme.SuccessGreen
 import kotlinx.coroutines.launch
 
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material3.CenterAlignedTopAppBar
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.TopAppBarDefaults
+
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ChecklistScreen(userPreferences: UserPreferences) {
+fun ChecklistScreen(
+    userPreferences: UserPreferences,
+    onNavigateBack: () -> Unit
+) {
     val scope = rememberCoroutineScope()
     val checkedItems by userPreferences.checkedItems.collectAsState(initial = emptySet())
 
@@ -30,35 +43,39 @@ fun ChecklistScreen(userPreferences: UserPreferences) {
     
     val progress = if (allItems.isNotEmpty()) checkedItems.size.toFloat() / allItems.size else 0f
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(Color(0xFFF5F5F5))
-    ) {
-        // Header
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .background(DeepNavyPurple)
-                .padding(24.dp)
-        ) {
-            Column {
-                Text(
-                    "Travel Essentials",
-                    style = MaterialTheme.typography.headlineMedium,
-                    color = Color.White
+    Scaffold(
+        topBar = {
+            CenterAlignedTopAppBar(
+                title = { 
+                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                        Text("Travel Essentials", color = Color.White)
+                        Text(
+                            "Don't leave anything behind",
+                            style = MaterialTheme.typography.bodySmall,
+                            color = Color.White.copy(alpha = 0.7f)
+                        )
+                    }
+                },
+                navigationIcon = {
+                    IconButton(onClick = onNavigateBack) {
+                        Icon(
+                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                            contentDescription = "Back",
+                            tint = Color.White
+                        )
+                    }
+                },
+                colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
+                    containerColor = DeepNavyPurple
                 )
-                Text(
-                    "Don't leave anything behind",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = Color.White.copy(alpha = 0.7f)
-                )
-            }
+            )
         }
-
+    ) { innerPadding ->
         Column(
             modifier = Modifier
                 .fillMaxSize()
+                .background(Color(0xFFF5F5F5))
+                .padding(innerPadding)
                 .padding(16.dp)
         ) {
             // Progress Bar Card

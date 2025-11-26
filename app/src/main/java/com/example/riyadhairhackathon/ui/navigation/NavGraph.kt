@@ -14,9 +14,12 @@ sealed class Screen(val route: String) {
     object Onboarding : Screen("onboarding")
     object Home : Screen("home")
     object Checklist : Screen("checklist")
-    object ARGate : Screen("ar_gate")
-    object ARSeat : Screen("ar_seat")
+    object ARGuide : Screen("ar_guide")
     object Tour : Screen("tour")
+    object Profile : Screen("profile")
+    object Updates : Screen("updates")
+    object Chat : Screen("chat")
+    object ExploreCity : Screen("explore_city")
 }
 
 @Composable
@@ -27,7 +30,7 @@ fun NavGraph(
 ) {
     NavHost(
         navController = navController,
-        startDestination = Screen.Home.route,
+        startDestination = Screen.Home.route, // Default, overridden in MainActivity if needed
         modifier = modifier
     ) {
         composable(Screen.Onboarding.route) {
@@ -40,36 +43,49 @@ fun NavGraph(
                 }
             )
         }
-
         composable(Screen.Home.route) {
             HomeScreen(
-                userPreferences = userPreferences,
-                onNavigateToGateAR = {
-                    navController.navigate(Screen.ARGate.route)
-                },
-                onNavigateToSeatAR = {
-                    navController.navigate(Screen.ARSeat.route)
-                },
-                onNavigateToChecklist = {
-                    navController.navigate(Screen.Checklist.route)
-                }
+                onNavigateToChecklist = { navController.navigate(Screen.Checklist.route) },
+                onNavigateToAR = { navController.navigate(Screen.ARGuide.route) },
+                onNavigateToProfile = { navController.navigate(Screen.Profile.route) },
+                onNavigateToUpdates = { navController.navigate(Screen.Updates.route) },
+                onNavigateToChat = { navController.navigate(Screen.Chat.route) },
+                onNavigateToExplore = { navController.navigate(Screen.ExploreCity.route) }
             )
         }
-
         composable(Screen.Checklist.route) {
-            ChecklistScreen(userPreferences = userPreferences)
+            ChecklistScreen(
+                userPreferences = userPreferences,
+                onNavigateBack = { navController.popBackStack() }
+            )
         }
-
-        composable(Screen.ARGate.route) {
-            ARGuideScreen(arMode = "GATE")
+        composable(Screen.ARGuide.route) {
+            ARGuideScreen(
+                onNavigateBack = { navController.popBackStack() }
+            )
         }
-
-        composable(Screen.ARSeat.route) {
-            ARGuideScreen(arMode = "SEAT")
-        }
-
         composable(Screen.Tour.route) {
             com.example.riyadhairhackathon.ui.screens.TourScreen()
+        }
+        composable(Screen.Profile.route) {
+            com.example.riyadhairhackathon.ui.screens.ProfileScreen(
+                onNavigateBack = { navController.popBackStack() }
+            )
+        }
+        composable(Screen.Updates.route) {
+            com.example.riyadhairhackathon.ui.screens.UpdatesScreen(
+                onNavigateBack = { navController.popBackStack() }
+            )
+        }
+        composable(Screen.Chat.route) {
+            com.example.riyadhairhackathon.ui.screens.ChatScreen(
+                onNavigateBack = { navController.popBackStack() }
+            )
+        }
+        composable(Screen.ExploreCity.route) {
+            com.example.riyadhairhackathon.ui.screens.ExploreCityScreen(
+                onNavigateBack = { navController.popBackStack() }
+            )
         }
     }
 }

@@ -7,14 +7,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.LocationOn
-import androidx.compose.material3.CenterAlignedTopAppBar
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.NavigationBar
-import androidx.compose.material3.NavigationBarItem
-import androidx.compose.material3.NavigationBarItemDefaults
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.*
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -31,18 +24,17 @@ import com.example.riyadhairhackathon.ui.theme.DeepNavyPurple
 import com.example.riyadhairhackathon.ui.theme.RiyadhAirHackathonTheme
 
 class MainActivity : ComponentActivity() {
-
     @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         val userPreferences = UserPreferences(this)
-
+        
         setContent {
             RiyadhAirHackathonTheme {
                 val isFirstLaunch by userPreferences.isFirstLaunch.collectAsState(initial = true)
                 val navController = rememberNavController()
-
+                
+                // Determine start destination based on first launch
                 LaunchedEffect(isFirstLaunch) {
                     if (isFirstLaunch) {
                         navController.navigate(Screen.Onboarding.route) {
@@ -52,27 +44,19 @@ class MainActivity : ComponentActivity() {
                 }
 
                 val navBackStackEntry by navController.currentBackStackEntryAsState()
-                val currentDestination = navBackStackEntry?.destination
-                val currentRoute = currentDestination?.route
-
-                val showBottomBar = currentRoute != Screen.Onboarding.route
-                // نخفي الـ TopBar في Onboarding و Tour (Tour عندها TopBar خاص فيها)
-                val showTopBar =
-                    currentRoute != Screen.Onboarding.route && currentRoute != Screen.Tour.route
+                val currentRoute = navBackStackEntry?.destination?.route
+                val showBottomBar = currentRoute in listOf(
+                    Screen.Home.route,
+                    Screen.Tour.route,
+                    Screen.Checklist.route,
+                    Screen.ARGuide.route
+                )
 
                 Scaffold(
                     topBar = {
-                        if (showTopBar) {
-                            val title = when (currentRoute) {
-                                Screen.Home.route -> "PathFinder Air"
-                                Screen.Checklist.route -> "Checklist"
-                                Screen.ARGate.route,
-                                Screen.ARSeat.route -> "AR Navigation"
-                                else -> "PathFinder Air"
-                            }
-
+                        if (showBottomBar) {
                             CenterAlignedTopAppBar(
-                                title = { Text(title, color = Color.White) },
+                                title = { Text("PathFinder Air", color = Color.White) },
                                 colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
                                     containerColor = DeepNavyPurple
                                 )
@@ -84,26 +68,18 @@ class MainActivity : ComponentActivity() {
                             NavigationBar(
                                 containerColor = Color.White
                             ) {
+                                val currentDestination = navBackStackEntry?.destination
+                                
                                 val items = listOf(
                                     Screen.Home to Icons.Default.Home,
-                                    Screen.Tour to Icons.Default.LocationOn
+                                    Screen.Tour to Icons.Default.LocationOn // Using LocationOn as a map placeholder
                                 )
-
+                                
                                 items.forEach { (screen, icon) ->
                                     NavigationBarItem(
-                                        icon = { androidx.compose.material3.Icon(icon, null) },
-                                        label = {
-                                            Text(
-                                                when (screen) {
-                                                    Screen.Home -> "Home"
-                                                    Screen.Tour -> "Tour"
-                                                    else -> screen.route
-                                                }
-                                            )
-                                        },
-                                        selected = currentDestination?.hierarchy?.any {
-                                            it.route == screen.route
-                                        } == true,
+                                        icon = { Icon(icon, contentDescription = null) },
+                                        label = { Text(screen.route.replaceFirstChar { it.uppercase() }) },
+                                        selected = currentDestination?.hierarchy?.any { it.route == screen.route } == true,
                                         onClick = {
                                             navController.navigate(screen.route) {
                                                 popUpTo(navController.graph.findStartDestination().id) {
