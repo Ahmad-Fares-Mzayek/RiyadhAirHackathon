@@ -103,23 +103,7 @@ fun UpdatesScreen(
     )
 
     Scaffold(
-        topBar = {
-            CenterAlignedTopAppBar(
-                title = { Text("Flight Updates", color = Color.White) },
-                navigationIcon = {
-                    IconButton(onClick = onNavigateBack) {
-                        Icon(
-                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = "Back",
-                            tint = Color.White
-                        )
-                    }
-                },
-                colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
-                    containerColor = DeepNavyPurple
-                )
-            )
-        }
+        // Top bar handled by MainActivity
     ) { innerPadding ->
         LazyColumn(
             modifier = Modifier

@@ -44,32 +44,7 @@ fun ChecklistScreen(
     val progress = if (allItems.isNotEmpty()) checkedItems.size.toFloat() / allItems.size else 0f
 
     Scaffold(
-        topBar = {
-            CenterAlignedTopAppBar(
-                title = { 
-                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                        Text("Travel Essentials", color = Color.White)
-                        Text(
-                            "Don't leave anything behind",
-                            style = MaterialTheme.typography.bodySmall,
-                            color = Color.White.copy(alpha = 0.7f)
-                        )
-                    }
-                },
-                navigationIcon = {
-                    IconButton(onClick = onNavigateBack) {
-                        Icon(
-                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = "Back",
-                            tint = Color.White
-                        )
-                    }
-                },
-                colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
-                    containerColor = DeepNavyPurple
-                )
-            )
-        }
+        // Top bar handled by MainActivity
     ) { innerPadding ->
         Column(
             modifier = Modifier

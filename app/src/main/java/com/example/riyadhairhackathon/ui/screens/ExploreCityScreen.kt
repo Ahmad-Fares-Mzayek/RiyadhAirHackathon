@@ -81,7 +81,7 @@ fun ExploreCityScreen(
             TravelActivity(
                 "Burj Khalifa",
                 "Soar to the top of the world's tallest building for breathtaking panoramic views of the city skyline and desert beyond.",
-                R.drawable.pic1,
+                R.drawable.p1,
                 "2-3 hours",
                 "Sunset",
                 "$$$",
@@ -91,7 +91,7 @@ fun ExploreCityScreen(
             TravelActivity(
                 "Desert Safari Adventure",
                 "Experience the thrill of dune bashing, camel riding, and a traditional BBQ dinner under the stars in the Arabian desert.",
-                R.drawable.pic4,
+                R.drawable.p2,
                 "6 hours",
                 "Afternoon",
                 "$$",
@@ -101,7 +101,7 @@ fun ExploreCityScreen(
             TravelActivity(
                 "The Dubai Mall",
                 "Shop 'til you drop at the world's largest destination for shopping, entertainment, and leisure, featuring the Dubai Aquarium.",
-                R.drawable.pic2,
+                R.drawable.p3,
                 "4+ hours",
                 "Anytime",
                 "Free Entry",
@@ -111,7 +111,7 @@ fun ExploreCityScreen(
             TravelActivity(
                 "Gold Souk",
                 "Wander through the glittering lanes of the traditional gold market and haggle for spices and textiles in the nearby souks.",
-                R.drawable.pic3,
+                R.drawable.p4,
                 "1-2 hours",
                 "Evening",
                 "Free Entry",
@@ -121,7 +121,7 @@ fun ExploreCityScreen(
             TravelActivity(
                 "Jumeirah Beach",
                 "Relax on the pristine white sands with views of the Burj Al Arab, or enjoy water sports in the turquoise waters.",
-                R.drawable.pic2,
+                R.drawable.p5,
                 "3 hours",
                 "Morning",
                 "Free",
@@ -131,7 +131,7 @@ fun ExploreCityScreen(
             TravelActivity(
                 "Dubai Fountain Show",
                 "Witness the world's largest choreographed fountain system set to music and lights at the foot of the Burj Khalifa.",
-                R.drawable.pic1,
+                R.drawable.p6,
                 "30 mins",
                 "Night",
                 "Free",
@@ -141,7 +141,7 @@ fun ExploreCityScreen(
             TravelActivity(
                 "Al Fahidi Historical District",
                 "Step back in time and explore the traditional wind-tower architecture and winding alleyways of old Dubai.",
-                R.drawable.pic5,
+                R.drawable.p7,
                 "2 hours",
                 "Morning",
                 "Free",
@@ -151,7 +151,7 @@ fun ExploreCityScreen(
             TravelActivity(
                 "Museum of the Future",
                 "Explore the future of science, technology, and innovation in one of the most beautiful buildings in the world.",
-                R.drawable.pic3,
+                R.drawable.p8,
                 "2-3 hours",
                 "Morning",
                 "$$$",
@@ -162,23 +162,7 @@ fun ExploreCityScreen(
     }
 
     Scaffold(
-        topBar = {
-            CenterAlignedTopAppBar(
-                title = { Text("Discover Dubai", color = Color.White) },
-                navigationIcon = {
-                    IconButton(onClick = onNavigateBack) {
-                        Icon(
-                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = "Back",
-                            tint = Color.White
-                        )
-                    }
-                },
-                colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
-                    containerColor = DeepNavyPurple
-                )
-            )
-        }
+        // Top bar handled by MainActivity
     ) { innerPadding ->
         LazyColumn(
             modifier = Modifier
@@ -187,26 +171,7 @@ fun ExploreCityScreen(
                 .background(Color.White),
             contentPadding = PaddingValues(bottom = 32.dp)
         ) {
-            // Top Action Button
-            item {
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(16.dp)
-                ) {
-                    Button(
-                        onClick = { /* TODO: Personalized flow */ },
-                        colors = ButtonDefaults.buttonColors(containerColor = DeepNavyPurple),
-                        modifier = Modifier.fillMaxWidth(),
-                        shape = RoundedCornerShape(12.dp)
-                    ) {
-                        Text(
-                            "Create itinerary based on AI Recommendations",
-                            modifier = Modifier.padding(vertical = 8.dp)
-                        )
-                    }
-                }
-            }
+
 
             // Hero Section
             item {
@@ -216,7 +181,7 @@ fun ExploreCityScreen(
                         .height(300.dp)
                 ) {
                     Image(
-                        painter = painterResource(id = R.drawable.pic1), // Using pic1 as Dubai hero
+                        painter = painterResource(id = R.drawable.p0), // Using pic1 as Dubai hero
                         contentDescription = "Dubai",
                         contentScale = ContentScale.Crop,
                         modifier = Modifier.fillMaxSize()
@@ -268,6 +233,26 @@ fun ExploreCityScreen(
                             CityStat("AED", "Currency")
                             CityStat("GMT+4", "Time")
                         }
+                    }
+                }
+            }
+            // Top Action Button
+            item {
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp)
+                ) {
+                    Button(
+                        onClick = { /* TODO: Personalized flow */ },
+                        colors = ButtonDefaults.buttonColors(containerColor = DeepNavyPurple),
+                        modifier = Modifier.fillMaxWidth(),
+                        shape = RoundedCornerShape(12.dp)
+                    ) {
+                        Text(
+                            "Create itinerary based on AI Recommendations",
+                            modifier = Modifier.padding(vertical = 8.dp)
+                        )
                     }
                 }
             }

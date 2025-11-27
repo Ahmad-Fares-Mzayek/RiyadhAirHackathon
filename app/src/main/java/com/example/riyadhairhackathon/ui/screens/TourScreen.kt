@@ -116,14 +116,7 @@ fun TourScreen() {
     }
 
     Scaffold(
-        topBar = {
-            CenterAlignedTopAppBar(
-                title = { Text("Tour", color = Color.White) },
-                colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
-                    containerColor = DeepNavyPurple
-                )
-            )
-        }
+        // Top bar handled by MainActivity
     ) { innerPadding ->
         
         Box(

@@ -40,77 +40,19 @@ fun ARGuideScreen(
 
     if (isArActive) {
         // Show AR View
-        Box(modifier = Modifier.fillMaxSize()) {
-            // Placeholder for AR Camera View
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .background(Color.DarkGray)
-            ) {
-                Text(
-                    "AR Camera Feed Placeholder\n(Requires Physical Device & Camera)",
-                    color = Color.White,
-                    modifier = Modifier.align(Alignment.Center),
-                    textAlign = androidx.compose.ui.text.style.TextAlign.Center
-                )
-            }
-            
-            // Overlays
-            Column(
-                modifier = Modifier
-                    .align(Alignment.TopCenter)
-                    .padding(top = 48.dp)
-                    .background(Color.Black.copy(alpha = 0.5f), shape = MaterialTheme.shapes.medium)
-                    .padding(16.dp)
-            ) {
-                Text(
-                    text = if (arMode == "GATE") "Gate $targetGate - 150m ahead" else "Seat $targetSeat - 6 rows ahead",
-                    color = Color.White,
-                    style = MaterialTheme.typography.titleMedium
-                )
-            }
-            
-            // Simulated AR Arrow
-            Box(
-                modifier = Modifier.align(Alignment.Center)
-            ) {
-                Text(
-                    text = "⬆️", // Simple arrow for demo
-                    style = MaterialTheme.typography.displayLarge
-                )
-            }
-
-            // Close Button
-            Button(
-                onClick = { isArActive = false },
-                modifier = Modifier
-                    .align(Alignment.TopEnd)
-                    .padding(16.dp),
-                colors = ButtonDefaults.buttonColors(containerColor = Color.Red)
-            ) {
-                Text("X")
-            }
+        if (arMode == "GATE") {
+            ARAirportGuideScreen(
+                onNavigateBack = { isArActive = false }
+            )
+        } else {
+            ARSeatFinderScreen(
+                onNavigateBack = { isArActive = false }
+            )
         }
     } else {
         // Selection Screen
         Scaffold(
-            topBar = {
-                CenterAlignedTopAppBar(
-                    title = { Text("Airport Wayfinding", color = Color.White) },
-                    navigationIcon = {
-                        IconButton(onClick = onNavigateBack) {
-                            Icon(
-                                imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                                contentDescription = "Back",
-                                tint = Color.White
-                            )
-                        }
-                    },
-                    colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
-                        containerColor = DeepNavyPurple
-                    )
-                )
-            }
+            // Top bar handled by MainActivity
         ) { innerPadding ->
             Column(
                 modifier = Modifier

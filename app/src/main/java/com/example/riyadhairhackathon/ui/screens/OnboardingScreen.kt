@@ -47,7 +47,7 @@ fun OnboardingScreen(
         Spacer(modifier = Modifier.height(32.dp))
 
         Text(
-            text = "PathFinder Air",
+            text = "Tirhal",
             style = MaterialTheme.typography.displayMedium,
             color = DeepNavyPurple,
             textAlign = TextAlign.Center

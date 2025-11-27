@@ -51,23 +51,7 @@ fun ProfileScreen(
     onNavigateBack: () -> Unit
 ) {
     Scaffold(
-        topBar = {
-            CenterAlignedTopAppBar(
-                title = { Text("Profile", color = Color.White) },
-                navigationIcon = {
-                    IconButton(onClick = onNavigateBack) {
-                        Icon(
-                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = "Back",
-                            tint = Color.White
-                        )
-                    }
-                },
-                colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
-                    containerColor = DeepNavyPurple
-                )
-            )
-        }
+        // Top bar handled by MainActivity
     ) { innerPadding ->
         Column(
             modifier = Modifier

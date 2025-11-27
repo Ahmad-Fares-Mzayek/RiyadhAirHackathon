@@ -10,7 +10,6 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.List
 import androidx.compose.material.icons.filled.Face
-import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.Star
@@ -81,30 +80,14 @@ fun HomeScreen(
         }
     }
 
-    Scaffold(
-        bottomBar = {
-            // Bottom bar is handled in MainActivity
-        },
-        floatingActionButton = {
-            FloatingActionButton(
-                onClick = onNavigateToChat,
-                containerColor = DeepNavyPurple,
-                contentColor = Color.White,
-                shape = CircleShape,
-                modifier = Modifier.padding(16.dp)
-            ) {
-                Icon(
-                    imageVector = Icons.Default.Face,
-                    contentDescription = "AI Assistant"
-                )
-            }
-        }
-    ) { innerPadding ->
+    // Scaffold removed - handled by MainActivity
+    
+    // Floating Action Button for Chat
+    Box(modifier = Modifier.fillMaxSize()) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .background(DeepNavyPurple) // Fix: Root background is now Purple to blend with header
-                .padding(innerPadding)
                 .verticalScroll(scrollState)
         ) {
             // Header Section
@@ -273,7 +256,7 @@ fun HomeScreen(
                             title = "AI Travel Suggestions",
                             subtitle = "Explore Dubai",
                             icon = Icons.Default.Star,
-                            imageRes = R.drawable.bg_seat_finder, // Using seat finder bg as requested
+                            imageRes = R.drawable.travel_suggestions, // Using seat finder bg as requested
                             onClick = onNavigateToExplore
                         )
                     }
@@ -308,6 +291,21 @@ fun HomeScreen(
                     Spacer(modifier = Modifier.height(32.dp)) // Bottom padding
                 }
             }
+        }
+        
+        FloatingActionButton(
+            onClick = onNavigateToChat,
+            containerColor = DeepNavyPurple,
+            contentColor = Color.White,
+            shape = CircleShape,
+            modifier = Modifier
+                .align(Alignment.BottomEnd)
+                .padding(16.dp)
+        ) {
+            Icon(
+                imageVector = Icons.Default.Face,
+                contentDescription = "AI Assistant"
+            )
         }
     }
 }

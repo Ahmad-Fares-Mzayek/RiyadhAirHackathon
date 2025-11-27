@@ -12,6 +12,7 @@ navigationCompose = "2.8.0"
 datastorePreferences = "1.1.1"
 accompanistPermissions = "0.34.0"
 arCore = "1.41.0"
+wearCompose = "1.2.1"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -34,6 +35,10 @@ accompanist-permissions = { group = "com.google.accompanist", name = "accompanis
 google-ar-core = { group = "com.google.ar", name = "core", version.ref = "arCore" }
 osmdroid-android = { group = "org.osmdroid", name = "osmdroid-android", version = "6.1.18" }
 google-generativeai = { group = "com.google.ai.client.generativeai", name = "generativeai", version = "0.9.0" }
+androidx-wear-compose-material = { group = "androidx.wear.compose", name = "compose-material", version.ref = "wearCompose" }
+androidx-wear-compose-foundation = { group = "androidx.wear.compose", name = "compose-foundation", version.ref = "wearCompose" }
+androidx-wear-compose-navigation = { group = "androidx.wear.compose", name = "compose-navigation", version.ref = "wearCompose" }
+androidx-material-icons-extended = { group = "androidx.compose.material", name = "material-icons-extended" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

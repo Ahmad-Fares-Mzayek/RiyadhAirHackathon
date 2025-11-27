@@ -84,13 +84,13 @@ fun ChatScreen(
     val generativeModel = remember {
         GenerativeModel(
             modelName = "gemini-2.5-flash", 
-            apiKey = "AIzaSyDX8gheNuoG_jLRW-9wUubTJxg07P_CyNU"
+            apiKey = com.example.riyadhairhackathon.BuildConfig.GEMINI_API_KEY
         )
     }
     
     // System Prompt Context
     val systemPrompt = """
-        You are a helpful AI travel assistant for Riyadh Air.
+        You are a helpful AI travel assistant for Tirhal.
         Keep responses extremely concise (1-2 sentences).
         Current flight: RX 254, Riyadh (RUH) to Dubai (DXB), Gate A23, Seat 14C, 3:15 PM.
     """.trimIndent()
@@ -147,23 +147,7 @@ fun ChatScreen(
     }
 
     Scaffold(
-        topBar = {
-            CenterAlignedTopAppBar(
-                title = { Text("AI Travel Assistant", color = Color.White) },
-                navigationIcon = {
-                    IconButton(onClick = onNavigateBack) {
-                        Icon(
-                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = "Back",
-                            tint = Color.White
-                        )
-                    }
-                },
-                colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
-                    containerColor = DeepNavyPurple
-                )
-            )
-        }
+        // Top bar handled by MainActivity
     ) { innerPadding ->
         Column(
             modifier = Modifier
