@@ -1,4 +1,4 @@
-# Implementation Plan - PathFinder Air
+# Implementation Plan - Tirhal
 
 ## Phase 1: Project Setup & Dependencies
 - [ ] Update `build.gradle.kts` with dependencies (Compose, Nav, DataStore, ARCore, Accompanist).

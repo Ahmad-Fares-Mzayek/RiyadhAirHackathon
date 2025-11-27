@@ -32,6 +32,8 @@ import androidx.wear.compose.material.ScalingLazyColumn
 import androidx.wear.compose.material.Text
 import androidx.wear.compose.material.TimeText
 import androidx.wear.compose.material.rememberScalingLazyListState
+import com.example.riyadhairhackathon.ui.theme.DeepNavyPurple
+import com.example.riyadhairhackathon.ui.theme.PrimaryPurple
 
 @Composable
 fun WearHomeScreen(
@@ -77,7 +79,7 @@ fun WearHomeScreen(
                 Text(
                     text = "Riyadh → Dubai",
                     fontSize = 16.sp,
-                    color = Color(0xFF8B7BA8) // Lavender
+                    color = PrimaryPurple // Lavender
                 )
                 Spacer(modifier = Modifier.height(16.dp))
             }
@@ -93,7 +95,7 @@ fun WearHomeScreen(
                     Text(
                         text = "until departure",
                         fontSize = 12.sp,
-                        color = Color(0xFF8B7BA8)
+                        color = PrimaryPurple
                     )
                 }
                 Spacer(modifier = Modifier.height(16.dp))
@@ -150,7 +152,7 @@ fun WearHomeScreen(
 fun InfoCard(label: String, modifier: Modifier = Modifier) {
     Box(
         modifier = modifier
-            .background(Color(0xFF240454), RoundedCornerShape(12.dp))
+            .background(DeepNavyPurple, RoundedCornerShape(12.dp))
             .padding(vertical = 12.dp),
         contentAlignment = Alignment.Center
     ) {
@@ -175,7 +177,7 @@ fun CompactChip(label: String, onClick: () -> Unit, modifier: Modifier = Modifie
                 fontSize = 10.sp
             )
         },
-        colors = ChipDefaults.chipColors(backgroundColor = Color(0xFF240454)),
+        colors = ChipDefaults.chipColors(backgroundColor = DeepNavyPurple),
         modifier = modifier.height(40.dp)
     )
 }

@@ -25,6 +25,7 @@ import androidx.wear.compose.material.ToggleChipDefaults
 import androidx.wear.compose.material.rememberScalingLazyListState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
+import com.example.riyadhairhackathon.ui.theme.DeepNavyPurple
 @Composable
 fun WearChecklistScreen() {
     val listState = rememberScalingLazyListState()
@@ -117,10 +118,10 @@ fun ChecklistItem(
             }
         },
         colors = ToggleChipDefaults.toggleChipColors(
-            checkedStartBackgroundColor = Color(0xFF240454),
-            checkedEndBackgroundColor = Color(0xFF240454),
-            uncheckedStartBackgroundColor = Color(0xFF240454).copy(alpha = 0.5f),
-            uncheckedEndBackgroundColor = Color(0xFF240454).copy(alpha = 0.5f),
+            checkedStartBackgroundColor = DeepNavyPurple,
+            checkedEndBackgroundColor = DeepNavyPurple,
+            uncheckedStartBackgroundColor = DeepNavyPurple.copy(alpha = 0.5f),
+            uncheckedEndBackgroundColor = DeepNavyPurple.copy(alpha = 0.5f),
             checkedContentColor = Color.White,
             uncheckedContentColor = Color.White
         ),

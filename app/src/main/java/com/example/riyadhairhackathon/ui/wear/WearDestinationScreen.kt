@@ -31,6 +31,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import com.example.riyadhairhackathon.R
+import com.example.riyadhairhackathon.ui.theme.DeepNavyPurple
 
 @Composable
 fun WearDestinationScreen() {
@@ -159,7 +160,7 @@ fun DestinationInfoCard(
         modifier = Modifier
             .fillMaxWidth()
             .padding(vertical = 4.dp)
-            .background(Color(0xFF240454), RoundedCornerShape(12.dp))
+            .background(DeepNavyPurple, RoundedCornerShape(12.dp))
             .padding(12.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {

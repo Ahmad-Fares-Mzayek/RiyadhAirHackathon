@@ -1,7 +1,7 @@
-# PathFinder Air - Specifications
+# Tirhal - Specifications
 
 ## Core Idea
-PathFinder Air is a companion app for Riyadh Air passengers, designed to streamline the airport experience with smart timers, checklists, and AR navigation.
+Tirhal is a companion app for Riyadh Air passengers, designed to streamline the airport experience with smart timers, checklists, and AR navigation.
 
 ## Design System
 - **Colors**:
